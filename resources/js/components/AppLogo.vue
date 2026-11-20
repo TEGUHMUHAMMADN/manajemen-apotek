@@ -1,19 +1,31 @@
-<script setup lang="ts">
-import { usePage } from '@inertiajs/vue3';
-import AppLogoIcon from '@/components/AppLogoIcon.vue';
-
-const name = usePage().props.name;
-</script>
+<script setup lang="ts"></script>
 
 <template>
     <div
-        class="flex aspect-square size-8 items-center justify-center rounded-md bg-sidebar-primary text-sidebar-primary-foreground"
+        class="flex min-w-0 items-center gap-2.5 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:gap-0"
     >
-        <AppLogoIcon class="size-5 fill-current text-white dark:text-black" />
-    </div>
-    <div class="ml-1 grid flex-1 text-left text-sm">
-        <span class="mb-0.5 truncate leading-tight font-semibold">{{
-            name
-        }}</span>
+        <!-- Logo -->
+        <div
+            class="flex size-10 shrink-0 items-center justify-center rounded-xl bg-emerald-600 text-white shadow-md shadow-emerald-600/20 transition-all duration-300"
+        >
+            <span class="text-3xl font-medium leading-none">+</span>
+        </div>
+
+        <!-- Nama Aplikasi -->
+        <div
+            class="flex min-w-0 flex-col transition-all duration-200 group-data-[collapsible=icon]:hidden"
+        >
+            <span
+                class="truncate text-lg font-bold tracking-tight text-slate-800"
+            >
+                Medi<span class="text-emerald-600">Stock</span>
+            </span>
+
+            <span
+                class="text-[9px] font-semibold uppercase tracking-[2px] text-slate-400"
+            >
+                Pharmacy Management
+            </span>
+        </div>
     </div>
 </template>

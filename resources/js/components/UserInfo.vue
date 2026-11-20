@@ -1,8 +1,14 @@
+
 <script setup lang="ts">
-import { computed } from 'vue';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useInitials } from '@/composables/useInitials';
-import type { User } from '@/types';
+import { computed } from "vue";
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar";
+
+import { useInitials } from "@/composables/useInitials";
+import type { User } from "@/types";
 
 type Props = {
     user: User;
@@ -15,24 +21,66 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { getInitials } = useInitials();
 
-// Compute whether we should show the avatar image
 const showAvatar = computed(
-    () => props.user.avatar && props.user.avatar !== '',
+    () => !!props.user.avatar
 );
 </script>
 
 <template>
-    <Avatar class="h-8 w-8 overflow-hidden rounded-lg">
-        <AvatarImage v-if="showAvatar" :src="user.avatar!" :alt="user.name" />
-        <AvatarFallback class="rounded-lg text-black dark:text-white">
-            {{ getInitials(user.name) }}
-        </AvatarFallback>
-    </Avatar>
+    <div
+        class="flex min-w-0 flex-1 items-center gap-3
+        group-data-[collapsible=icon]:justify-center
+        group-data-[collapsible=icon]:gap-0"
+    >
+        <!-- User Avatar -->
+        <Avatar
+            class="h-10 w-10 shrink-0 rounded-xl
+            border-2 border-emerald-100
+            shadow-sm transition-all duration-300
+            group-hover:border-emerald-300
+            group-hover:shadow-emerald-100"
+        >
+            <AvatarImage
+                v-if="showAvatar"
+                :src="user.avatar!"
+                :alt="user.name"
+                class="rounded-xl object-cover"
+            />
 
-    <div class="grid flex-1 text-left text-sm leading-tight">
-        <span class="truncate font-medium">{{ user.name }}</span>
-        <span v-if="showEmail" class="truncate text-xs text-muted-foreground">{{
-            user.email
-        }}</span>
+            <AvatarFallback
+                class="rounded-xl bg-gradient-to-br
+                from-emerald-500 to-teal-700
+                text-sm font-bold tracking-wide text-white"
+            >
+                {{ getInitials(user.name) }}
+            </AvatarFallback>
+        </Avatar>
+
+        <!-- User Information -->
+        <div
+            class="grid min-w-0 flex-1 text-left
+            group-data-[collapsible=icon]:hidden"
+        >
+            <span
+                class="truncate text-sm font-bold text-slate-800"
+            >
+                {{ user.name }}
+            </span>
+
+            <span
+                v-if="showEmail"
+                class="truncate text-xs text-slate-500"
+            >
+                {{ user.email }}
+            </span>
+
+            <span
+                v-else
+                class="text-[10px] font-medium
+                tracking-wide text-emerald-600"
+            >
+                ADMIN APOTEK
+            </span>
+        </div>
     </div>
 </template>

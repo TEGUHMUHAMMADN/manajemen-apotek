@@ -1,5 +1,7 @@
+
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
+
 import {
     LayoutGrid,
     Pill,
@@ -8,9 +10,11 @@ import {
     FileText,
     Barcode,
 } from "@lucide/vue";
+
 import AppLogo from "@/components/AppLogo.vue";
 import NavMain from "@/components/NavMain.vue";
 import NavUser from "@/components/NavUser.vue";
+
 import {
     Sidebar,
     SidebarContent,
@@ -20,6 +24,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar";
+
 import { dashboard } from "@/routes";
 import type { NavItem } from "@/types";
 
@@ -35,12 +40,12 @@ const mainNavItems: NavItem[] = [
         icon: Tags,
     },
     {
-        title: "Data Obat (Inventaris)",
+        title: "Data Obat",
         href: "/medicines",
         icon: Pill,
     },
     {
-        title: "Input / Scan Obat Masuk",
+        title: "Input Obat Masuk",
         href: "/medicines/create",
         icon: Barcode,
     },
@@ -58,12 +63,40 @@ const mainNavItems: NavItem[] = [
 </script>
 
 <template>
-    <Sidebar collapsible="icon" variant="inset">
-        <SidebarHeader>
+    <Sidebar
+        collapsible="icon"
+        variant="sidebar"
+        class="
+            border-r border-emerald-100
+            bg-white
+            [--sidebar-width:16.25rem]
+            [--sidebar-width-icon:4.75rem]
+            [&_[data-sidebar=sidebar]]:!bg-white
+            [&_[data-sidebar=sidebar]]:!text-slate-700
+        "
+    >
+        <!-- LOGO -->
+        <SidebarHeader
+            class="border-b border-emerald-100 bg-white p-3"
+        >
             <SidebarMenu>
                 <SidebarMenuItem>
-                    <SidebarMenuButton size="lg" as-child>
-                        <Link :href="dashboard()">
+                    <SidebarMenuButton
+                        size="lg"
+                        as-child
+                        tooltip="MediStock"
+                        class="
+                            h-14 rounded-xl
+                            transition-all duration-200
+                            hover:bg-emerald-50
+                            group-data-[collapsible=icon]:!justify-center
+                            group-data-[collapsible=icon]:!px-0
+                        "
+                    >
+                        <Link
+                            :href="dashboard()"
+                            class="flex items-center gap-2 overflow-hidden"
+                        >
                             <AppLogo />
                         </Link>
                     </SidebarMenuButton>
@@ -71,13 +104,21 @@ const mainNavItems: NavItem[] = [
             </SidebarMenu>
         </SidebarHeader>
 
-        <SidebarContent>
+        <!-- NAVIGATION -->
+        <SidebarContent
+            class="bg-white px-2 py-5"
+        >
             <NavMain :items="mainNavItems" />
         </SidebarContent>
 
-        <SidebarFooter>
+        <!-- ADMIN PROFILE -->
+        <SidebarFooter
+            class="
+                border-t border-emerald-100
+                bg-white p-2
+            "
+        >
             <NavUser />
         </SidebarFooter>
     </Sidebar>
-    <slot />
 </template>
